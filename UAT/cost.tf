@@ -1,5 +1,5 @@
 # AWS Budget to monitor monthly spending for EC2
-resource "aws_budgets_budget" "bs101-uat_budget" {
+resource "aws_budgets_budget" "frhn-uat_budget" {
   name         = "AppBudget"
   budget_type  = "COST"
   limit_amount = "500"
@@ -12,11 +12,11 @@ resource "aws_budgets_budget" "bs101-uat_budget" {
     threshold_type      = "PERCENTAGE"
     notification_type   = "ACTUAL"
     # List of subscribers for the notification
-    subscriber_email_addresses = ["samuel.ogah@zicloudtech.com"]
+    subscriber_email_addresses = ["elelev@gmail.com"]
   }
 
   tags = {
-    Name = "bs101-uat_budget"
+    Name = "frhn-uat_budget"
   }
 }
 

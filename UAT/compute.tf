@@ -1,12 +1,12 @@
 # Public EC2 Instances (Web Tier)
-resource "aws_instance" "bme_uat_web_1" {
+resource "aws_instance" "frhn_uat_web_1" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet_1.id
   vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
 
   tags = {
-    Name = "bme-uat-web-1"
+    Name = "frhn-uat-web-1"
   }
 
   user_data = <<-EOF
@@ -19,14 +19,14 @@ resource "aws_instance" "bme_uat_web_1" {
   EOF
 }
 
-resource "aws_instance" "bme_uat_web_2" {
+resource "aws_instance" "frhn_uat_web_2" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet_2.id
   vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
 
   tags = {
-    Name = "bme-uat-web-2"
+    Name = "frhn-uat-web-2"
   }
 
   user_data = <<-EOF
@@ -40,14 +40,14 @@ resource "aws_instance" "bme_uat_web_2" {
 }
 
 # Private EC2 Instances (App Tier)
-resource "aws_instance" "bs101-uat_1" {
+resource "aws_instance" "frhn-uat_1" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_1.id
   vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
 
   tags = {
-    Name = "bme-uat-app-1"
+    Name = "frhn-uat-app-1"
   }
 
   user_data = <<-EOF
@@ -60,14 +60,14 @@ resource "aws_instance" "bs101-uat_1" {
   EOF
 }
 
-resource "aws_instance" "bs101-uat_2" {
+resource "aws_instance" "frhn-uat_2" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private_subnet_2.id
   vpc_security_group_ids = [aws_security_group.vpc_app_sg.id]
 
   tags = {
-    Name = "bme-uat-app-2"
+    Name = "frhn-uat-app-2"
   }
 
   user_data = <<-EOF
@@ -81,13 +81,13 @@ resource "aws_instance" "bs101-uat_2" {
 }
 
 # Lambda Function as Application Server
-# resource "aws_lambda_function" "bs101-uat_lambda" {
-#   function_name = "bme-uat-app-lambda"
+# resource "aws_lambda_function" "frhn-uat_lambda" {
+#   function_name = "frhn-uat-app-lambda"
 #   runtime       = "nodejs18.x"         # Ensure the runtime is supported
 #   handler       = "index.handler"      # Make sure this matches your code’s entry point
 
 #   # S3 bucket and key where the Lambda code is stored
-#   s3_bucket = "bme-uat-app2"           # Correct bucket name
+#   s3_bucket = "frhn-uat-app2"           # Correct bucket name
 #   s3_key    = "lambda.zip"             # Path to the Lambda package in S3
 
 #   # Ensure the IAM role has permissions for Lambda execution
@@ -96,7 +96,7 @@ resource "aws_instance" "bs101-uat_2" {
 
 # IAM Role for Lambda Execution
 # resource "aws_iam_role" "lambda_execution_role" {
-#   name = "bme-uat-app-lambda-role"
+#   name = "frhn-uat-app-lambda-role"
 
 #   assume_role_policy = jsonencode({
 #     Version = "2012-10-17",

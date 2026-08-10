@@ -1,67 +1,67 @@
 # Define the VPC
-resource "aws_vpc" "bs101-uat" {
+resource "aws_vpc" "frhn-uat" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "bme-uat-app-vpc"
+    Name = "frhn-uat-app-vpc"
   }
 }
 
 # Define Public and Private Subnets
 resource "aws_subnet" "public_subnet_1" {
-  vpc_id                  = aws_vpc.bs101-uat.id
+  vpc_id                  = aws_vpc.frhn-uat.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "us-west-2a"
   map_public_ip_on_launch = true
   tags = {
-    Name = "bme-uat-app-public-subnet-1"
+    Name = "frhn-uat-app-public-subnet-1"
   }
 }
 
 resource "aws_subnet" "public_subnet_2" {
-  vpc_id                  = aws_vpc.bs101-uat.id
+  vpc_id                  = aws_vpc.frhn-uat.id
   cidr_block              = "10.0.2.0/24"
   availability_zone       = "us-west-2b"
   map_public_ip_on_launch = true
   tags = {
-    Name = "bme-uat-app-public-subnet-2"
+    Name = "frhn-uat-app-public-subnet-2"
   }
 }
 
 resource "aws_subnet" "private_subnet_1" {
-  vpc_id            = aws_vpc.bs101-uat.id
+  vpc_id            = aws_vpc.frhn-uat.id
   cidr_block        = "10.0.3.0/24"
   availability_zone = "us-west-2a"
   tags = {
-    Name = "bme-uat-app-private-subnet-1"
+    Name = "frhn-uat-app-private-subnet-1"
   }
 }
 
 resource "aws_subnet" "private_subnet_2" {
-  vpc_id            = aws_vpc.bs101-uat.id
+  vpc_id            = aws_vpc.frhn-uat.id
   cidr_block        = "10.0.4.0/24"
   availability_zone = "us-west-2b"
   tags = {
-    Name = "bme-uat-app-private-subnet-2"
+    Name = "frhn-uat-app-private-subnet-2"
   }
 }
 
 # Internet Gateway for public subnets
-resource "aws_internet_gateway" "bs101-uat_igw" {
-  vpc_id = aws_vpc.bs101-uat.id
+resource "aws_internet_gateway" "frhn-uat_igw" {
+  vpc_id = aws_vpc.frhn-uat.id
   tags = {
-    Name = "bme-uat-app-igw"
+    Name = "frhn-uat-app-igw"
   }
 }
 
 # Public Route Table with route to Internet Gateway
 resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.bs101-uat.id
+  vpc_id = aws_vpc.frhn-uat.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.bs101-uat_igw.id
+    gateway_id = aws_internet_gateway.frhn-uat_igw.id
   }
   tags = {
-    Name = "bme-uat-app-public-rt"
+    Name = "frhn-uat-app-public-rt"
   }
 }
 
@@ -78,7 +78,7 @@ resource "aws_route_table_association" "public_subnet_assoc_2" {
 
 # Security Groups
 resource "aws_security_group" "vpc_web_sg" {
-  vpc_id = aws_vpc.bs101-uat.id
+  vpc_id = aws_vpc.frhn-uat.id
 
   ingress {
     from_port   = 80
@@ -95,12 +95,12 @@ resource "aws_security_group" "vpc_web_sg" {
   }
 
   tags = {
-    Name = "bme-uat-web-sg"
+    Name = "frhn-uat-web-sg"
   }
 }
 
 resource "aws_security_group" "vpc_app_sg" {
-  vpc_id = aws_vpc.bs101-uat.id
+  vpc_id = aws_vpc.frhn-uat.id
 
   ingress {
     from_port   = 80
@@ -117,12 +117,12 @@ resource "aws_security_group" "vpc_app_sg" {
   }
 
   tags = {
-    Name = "bme-uat-app-sg"
+    Name = "frhn-uat-app-sg"
   }
 }
 
 resource "aws_security_group" "lambda_sg" {
-  vpc_id = aws_vpc.bs101-uat.id
+  vpc_id = aws_vpc.frhn-uat.id
 
   ingress {
     from_port   = 443
@@ -139,6 +139,6 @@ resource "aws_security_group" "lambda_sg" {
   }
 
   tags = {
-    Name = "bme-uat-lambda-sg"
+    Name = "frhn-uat-lambda-sg"
   }
 }

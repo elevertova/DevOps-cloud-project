@@ -1,9 +1,10 @@
 terraform {
   backend "s3" {
-    bucket         = "bs101-dev-app-buckettt"
+    bucket         = "frhn-dev-app-bucket"
     key            = "dev/terraform.tfstate"         # Use a unique path per environment
     region         = "us-west-2"
-    #dynamodb_table = "bs101-dev-app-dbb"
+    #dynamodb_table = "frhn-dev-app-db"
+    use_lockfile   = true
     encrypt        = true
   }
 }
