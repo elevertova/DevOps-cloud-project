@@ -15,7 +15,7 @@ resource "aws_instance" "frhn_uat_web_1" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>BME UAT Application - Web Server 1</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN UAT Application - Web Server 1</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -35,7 +35,7 @@ resource "aws_instance" "frhn_uat_web_2" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>BME UAT Application - Web Server 2</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN UAT Application - Web Server 2</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -56,7 +56,7 @@ resource "aws_instance" "frhn-uat_1" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>BME UAT Application - App Server 1</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN UAT Application - App Server 1</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -76,7 +76,7 @@ resource "aws_instance" "frhn-uat_2" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>BME UAT Application - App Server 2</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN UAT Application - App Server 2</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -125,8 +125,8 @@ resource "aws_instance" "frhn-uat_2" {
 #           "s3:ListBucket"
 #         ],
 #         Resource = [
-#           "arn:aws:s3:::bme-uat-app2",                    # Allow access to the bucket
-#           "arn:aws:s3:::bme-uat-app2/lambda.zip"          # Allow access to the specific object
+#           "arn:aws:s3:::frhn-uat-app2",                    # Allow access to the bucket
+#           "arn:aws:s3:::frhn-uat-app2/lambda.zip"          # Allow access to the specific object
 #         ]
 #       }
 #     ]

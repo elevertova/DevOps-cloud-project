@@ -15,7 +15,7 @@ resource "aws_instance" "frhn_dev_web_1" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>frhn dev Application - Web Server 1</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN dev Application - Web Server 1</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -35,7 +35,7 @@ resource "aws_instance" "frhn_dev_web_2" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>frhn dev Application - Web Server 2</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN dev Application - Web Server 2</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -56,7 +56,7 @@ resource "aws_instance" "frhn-dev_1" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>frhn dev Application - App Server 1</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN dev Application - App Server 1</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -76,7 +76,7 @@ resource "aws_instance" "frhn-dev_2" {
     yum install -y httpd
     systemctl start httpd
     systemctl enable httpd
-    echo "<html><body><h1>frhn dev Application - App Server 2</h1></body></html>" > /var/www/html/index.html
+    echo "<html><body><h1>FRHN dev Application - App Server 2</h1></body></html>" > /var/www/html/index.html
   EOF
 }
 

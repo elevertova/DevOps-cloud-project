@@ -12,7 +12,7 @@ resource "aws_sns_topic_subscription" "frhn-uat_email_subscription" {
 
 # CloudWatch Log Group for application logs
 resource "aws_cloudwatch_log_group" "frhn-uat_logs" {
-  name              = "/aws/bme-uat-app/logs"
+  name              = "/aws/frhn-uat-app/logs"
   retention_in_days = 7 # Retain logs for 7 days
 }
 
@@ -134,7 +134,7 @@ resource "aws_cloudwatch_metric_alarm" "frhn-uat_ec2_cpu_alarm" {
   statistic           = "Average"
   threshold           = 85
   dimensions = {
-    InstanceId = aws_instance.bme_uat_web_1.id # Make sure this EC2 instance is defined in the configuration
+    InstanceId = aws_instance.frhn_uat_web_1.id # Make sure this EC2 instance is defined in the configuration
   }
 
   alarm_actions = [aws_sns_topic.frhn-uat_alarm_topic.arn]
@@ -151,7 +151,7 @@ resource "aws_cloudwatch_metric_alarm" "frhn-uat_ec2_cpu_alarm_1" {
   statistic           = "Average"
   threshold           = 85
   dimensions = {
-    InstanceId = aws_instance.bme_uat_web_1.id # Ensure this EC2 instance is defined in the configuration
+    InstanceId = aws_instance.frhn_uat_web_1.id # Ensure this EC2 instance is defined in the configuration
   }
 
   alarm_actions = [aws_sns_topic.frhn-uat_alarm_topic.arn]
