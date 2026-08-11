@@ -72,6 +72,10 @@ resource "aws_cloudtrail" "frhn-dev_trail" {
   is_multi_region_trail      = false
   enable_log_file_validation = true
 
+  depends_on = [
+    aws_s3_bucket_policy.frhn-dev_monitoring_bucket_policy
+  ]
+  
   tags = {
     Name = "frhn-dev-app-cloudtrail"
   }
