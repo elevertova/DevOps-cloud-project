@@ -1,10 +1,15 @@
 name: AWS Terraform CI/CD
 
+# GitHub Actions workflow for deploying Terraform across environments
+# - Dev and UAT run on pushes to non-main branches
+# - Prod runs only on `main` when explicitly triggered via `deploy_to_production`
+
 on:
   push:
     branches-ignore:
       - main
   workflow_dispatch:
+    # Manual trigger inputs
     inputs:
       deploy_to_production:
         description: 'Deploy to Production?'
@@ -26,10 +31,14 @@ on:
         options: [dev, uat, prod]
 
 permissions:
+  # Allow OIDC id-token for aws-actions/configure-aws-credentials
   id-token: write
+  # Read-only access to repository contents for actions/checkout
   contents: read
 
 jobs:
+  # Deploy to Dev
+  # Runs for non-main branches unless `destroy` is true
   deploy-dev:
     name: Deploy to Dev
     if: github.ref != 'refs/heads/main' && github.event.inputs.destroy != 'true'
@@ -42,8 +51,9 @@ jobs:
       - name: Configure AWS Credentials (Dev)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::817715291662:role/GitHubActionsRole
-          aws-region: us-east-1
+          # IAM role to assume (OIDC) for Dev account
+          role-to-assume: arn:aws:iam::677123926354:role/GitHubActionsRole
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -53,6 +63,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+  # Deploy to UAT
+  # Runs after Dev completes for non-main branches
   deploy-uat:
     name: Deploy to UAT
     if: github.ref != 'refs/heads/main' && github.event.inputs.destroy != 'true'
@@ -66,8 +78,9 @@ jobs:
       - name: Configure AWS Credentials (UAT)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::887942575674:role/GitHubActionsRole
-          aws-region: us-east-1
+          # IAM role to assume (OIDC) for UAT account
+          role-to-assume: arn:aws:iam::590951086377:role/GitHubActionsRole
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -77,6 +90,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+  # Deploy to Production
+  # Only runs on `main` when `deploy_to_production` input is true
   deploy-prod:
     name: Deploy to Production
     if: github.ref == 'refs/heads/main' && github.event.inputs.deploy_to_production == 'true'
@@ -89,8 +104,9 @@ jobs:
       - name: Configure AWS Credentials (Prod)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::403884279428:role/GitHubActionsRole
-          aws-region: us-east-1
+          # IAM role to assume (OIDC) for Prod account
+          role-to-assume: arn:aws:iam::330907589313:role/GitHubActionsRole
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
@@ -100,6 +116,8 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+  # Destroy job: runs when `destroy` input is true
+  # Working directory and assumed role are chosen based on `environment` input
   destroy:
     name: Destroy Infrastructure
     if: github.event.inputs.destroy == 'true'
@@ -112,11 +130,12 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
+          # Dynamically select the IAM role to assume for the requested environment
           role-to-assume: >-
-            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::817715291662:role/GitHubActionsRole' || 
-                github.event.inputs.environment == 'uat' && 'arn:aws:iam::887942575674:role/GitHubActionsRole' || 
-                'arn:aws:iam::403884279428:role/GitHubActionsRole' }}
-          aws-region: us-east-1
+            ${{ github.event.inputs.environment == 'dev' && 'arn:aws:iam::677123926354:role/GitHubActionsRole' || 
+                github.event.inputs.environment == 'uat' && 'arn:aws:iam::590951086377:role/GitHubActionsRole' || 
+                'arn:aws:iam::330907589313:role/GitHubActionsRole' }}
+          aws-region: us-west-2
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
