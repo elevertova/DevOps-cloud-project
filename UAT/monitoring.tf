@@ -73,7 +73,7 @@ resource "aws_cloudtrail" "frhn-uat_trail" {
   enable_log_file_validation = true
 
   depends_on = [
-    aws_s3_bucket.frhn-uat_monitoring_bucket.bucket
+    aws_s3_bucket_policy.frhn-uat_monitoring_bucket_policy
   ]
   
   tags = {
