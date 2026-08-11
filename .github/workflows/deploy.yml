@@ -48,7 +48,7 @@ jobs:
         working-directory: Dev
     steps:
       - uses: actions/checkout@v4      
-      - name: Configure AWS Credentials (Dev) - feature/assessment-13-pipeline
+      - name: Configure AWS Credentials (Dev)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           # IAM role to assume (OIDC) for Dev account
