@@ -72,6 +72,10 @@ resource "aws_cloudtrail" "frhn-prod_trail" {
   is_multi_region_trail      = false
   enable_log_file_validation = true
 
+  depends_on = [
+    aws_s3_bucket.frhn-prod_monitoring_bucket.bucket
+  ]
+  
   tags = {
     Name = "frhn-prod-app-cloudtrail"
   }
